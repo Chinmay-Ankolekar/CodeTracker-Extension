@@ -1,0 +1,10 @@
+{
+    "name":"Leetcode Tracker",
+    "version":"1.0.0",
+    "description":"This extension will track your leetcode progress",
+    "manifest_version":3,
+    "action":{
+        "default_popup":"popup.html",
+        "default_title":"Leetcode Tracker"
+    }
+}
