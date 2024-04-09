@@ -1,10 +1,37 @@
 {
-    "name":"Leetcode Tracker",
-    "version":"1.0.0",
-    "description":"This extension will track your leetcode progress",
-    "manifest_version":3,
-    "action":{
-        "default_popup":"popup.html",
-        "default_title":"Leetcode Tracker"
-    }
+    "name": "Leetcode Tracker",
+    "version": "1.0.0",
+    "description": "This extension will track your leetcode progress",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Leetcode Tracker"
+    },
+    "permissions": [
+        "activeTab",
+        "contextMenus",
+        "storage"
+    ],
+    "optional_permissions": [
+        "topSites"
+    ],
+    "host_permissions": [
+        "https://www.developer.chrome.com/*"
+    ],
+    "optional_host_permissions": [
+        "https://*/*",
+        "http://*/*"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'unsafe-eval'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://music.yandex.ru/;"
+    },        
+    "web_accessible_resources": [
+        "index.js"
+    ],
+    "content_scripts": [{
+        "js": [ "popup.js"],
+        "matches": ["http://*/*", "https://*/*"]
+      }]
+    
 }
+
