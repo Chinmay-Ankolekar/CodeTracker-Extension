@@ -24,27 +24,6 @@ const getQuestions = async (problem_name) => {
     }
     const data = await response.json();
 
-    // document.getElementById("questionTitle").innerHTML =
-    //   "Title: " + data.questionTitle;
-    // document.getElementById("questionDifficulty").innerHTML =
-    //   "Difficulty: " + data.difficulty;
-    // const topics = data.topicTags.map((topic) => topic.name).join(", ");
-    // document.getElementById("questionTopics").innerHTML = "Topics: " + topics;
-    // document.getElementById("questionLink").innerHTML = `<a href="${data.link}" target="_blank">Question Link</a>`;
-    
-    // const database = getDatabase();
-    // const questionsRef = ref(database, 'questions');
-    // const newQuestionRef = push(questionsRef);
-    // const questionKey = newQuestionRef.key;
-    // const questionData = {
-    //   title: data.questionTitle,
-    //   difficulty: data.difficulty,
-    //   topics: topics,
-    //   link: data.link
-    // };
-    // await set(child(questionsRef, questionKey), questionData);
-    // alert("Question added to the database successfully!");
-
     document.getElementById("questionTitle").innerHTML =
       "Title: " + data.questionTitle;
     document.getElementById("questionDifficulty").innerHTML =
@@ -53,24 +32,46 @@ const getQuestions = async (problem_name) => {
     document.getElementById("questionTopics").innerHTML = "Topics: " + topics;
     document.getElementById("questionLink").innerHTML = `<a href="${data.link}" target="_blank">Question Link</a>`;
     
-    // Write data to Firebase using REST API
-    const url = `https://${firebaseConfig.projectId}.firebaseio.com/questions.json`;
-    const postData = {
+    const database = getDatabase();
+    const questionsRef = ref(database, 'questions');
+    const newQuestionRef = push(questionsRef);
+    const questionKey = newQuestionRef.key;
+    const questionData = {
       title: data.questionTitle,
       difficulty: data.difficulty,
       topics: topics,
       link: data.link
     };
-    await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(postData)
-    });
+    await set(child(questionsRef, questionKey), questionData);
+    alert("Question added to the database successfully!");
+
+  //   document.getElementById("questionTitle").innerHTML =
+  //     "Title: " + data.questionTitle;
+  //   document.getElementById("questionDifficulty").innerHTML =
+  //     "Difficulty: " + data.difficulty;
+  //   const topics = data.topicTags.map((topic) => topic.name).join(", ");
+  //   document.getElementById("questionTopics").innerHTML = "Topics: " + topics;
+  //   document.getElementById("questionLink").innerHTML = `<a href="${data.link}" target="_blank">Question Link</a>`;
+    
+  //   // Write data to Firebase using REST API
+  //   const url = `https://${firebaseConfig.projectId}.firebaseio.com/questions.json`;
+  //   const postData = {
+  //     title: data.questionTitle,
+  //     difficulty: data.difficulty,
+  //     topics: topics,
+  //     link: data.link
+  //   };
+  //   await fetch(url, {
+  //     method: 'POST',
+  //     body: JSON.stringify(postData)
+  //   });
 
     alert("Question added to the database successfully!");
   } catch (error) {
     console.log(error);
   }
 };
+
 
 
 // const getQuestions = async (problem_name) => {
@@ -125,3 +126,4 @@ clearButton.addEventListener("click", () => {
   document.getElementById("questionLink").innerHTML = "";
   document.getElementById("url").value = "";
 });
+

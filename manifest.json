@@ -23,11 +23,8 @@
         "http://*/*"
     ],
     "content_security_policy": {
-        "extension_pages": "script-src 'self' 'unsafe-eval'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://music.yandex.ru/;"
-    },        
-    "web_accessible_resources": [
-        "index.js"
-    ],
+        "extension_pages": "script-src 'nonce-{RANDOM}' 'strict-dynamic'; object-src 'none'; base-uri 'none';"
+      },      
     "content_scripts": [{
         "js": [ "popup.js"],
         "matches": ["http://*/*", "https://*/*"]
