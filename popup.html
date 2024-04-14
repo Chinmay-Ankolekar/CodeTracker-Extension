@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src *;">
-   
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Leetcode Tracker</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div id="container">
-      <h1>Leetcode Tracker</h1>
-      <label id="label" for="url">Enter Question url:</label>
-      <input id="url" type="text" />
-      <p id="questionTitle"></p>
-      <p id="questionDifficulty"></p>
-      <p id="questionTopics"></p>
-      <a id="questionLink"></a>
-      <button id="button">Submit</button>
-      <!-- <button id="add-btn">Add</button> -->
-      <button id="clear-btn">Clear</button>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main">
+        <div id="login-form">
+            <input type="text" id="email" class="input">
+            <input type="password" id="password" class="input">
+            <button id="submit">Login with Email</button>
+            <button id="google-login">Login with Google</button> 
+            <button id="signup">Sign up with Email</button> 
+        </div>
+        <div id="url-div" style="display: none;">
+            <input type="text" id="url" placeholder="Enter URL">
+            <button id="store-url">Submit</button>
+            <button id="logout">Logout</button>
+        </div>
     </div>
-  </body>
-  
-  <script type="module" src="popup.js"></script>
-  
+    
+    <div class="main2">
+        <h1 id="discriber">Please Login First</h1>
+    </div>
+
+    <script src="./firebase/firebase-app.js"></script>
+    <script src="./firebase/firebase-auth.js"></script>
+    <script src="./firebase/firebase.js"></script>
+    <script src="popup.js"></script>
+</body>
 </html>

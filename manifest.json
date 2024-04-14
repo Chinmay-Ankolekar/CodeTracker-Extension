@@ -1,34 +1,24 @@
 {
-    "name": "Leetcode Tracker",
+    "name" : "Leetcode Tracker",
     "version": "1.0.0",
-    "description": "This extension will track your leetcode progress",
     "manifest_version": 3,
-    "action": {
-        "default_popup": "popup.html",
-        "default_title": "Leetcode Tracker"
-    },
     "permissions": [
         "activeTab",
-        "contextMenus",
-        "storage"
+        "tabs",
+        "https://*.firebaseio.com/"  
     ],
-    "optional_permissions": [
-        "topSites"
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["popup.js"],
+            "run_at": "document_end"
+        }
     ],
-    "host_permissions": [
-        "https://www.developer.chrome.com/*"
-    ],
-    "optional_host_permissions": [
-        "https://*/*",
-        "http://*/*"
-    ],
-    "content_security_policy": {
-        "extension_pages": "script-src 'nonce-{RANDOM}' 'strict-dynamic'; object-src 'none'; base-uri 'none';"
-      },      
-    "content_scripts": [{
-        "js": [ "popup.js"],
-        "matches": ["http://*/*", "https://*/*"]
-      }]
-    
+    "action": {
+        "default_title": "Leetcode Tracker",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service-worker": "firebase.js"
+    }
 }
-
