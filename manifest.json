@@ -20,5 +20,10 @@
     },
     "background": {
         "service-worker": "firebase.js"
+    },
+    "content_security_policy": {
+        "script-src": ["'self'", "https://*.firebaseio.com", "https://www.gstatic.com"]
     }
+    
+    
 }

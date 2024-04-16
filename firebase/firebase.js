@@ -9,10 +9,125 @@ const firebaseConfig = {
     measurementId: "G-EW08MHQ81B"
   };
   
-  try{
+
     firebase.initializeApp(firebaseConfig);
+
+    document.getElementById('google-login').addEventListener('click', loginWithGoogle);
+
+    function loginWithGoogle() {
+      let provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+          .then((result) => {
+              let user = result.user;
+              console.log(user);
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+    }
     
-  }
-  catch(e){
-    console.log(e);
-  }
+    console.log("working");
+    
+    firebase.auth().onAuthStateChanged((user) => {
+        let loginForm = document.getElementById('login-form');
+        let urlDiv = document.getElementById('url-div');
+    
+        if (user) {
+            loginForm.style.display = 'none';
+            urlDiv.style.display = 'block';
+            discriber.innerHTML = "Logged In";
+        } else {
+            loginForm.style.display = 'block';
+            urlDiv.style.display = 'none';
+            discriber.innerHTML = "Please Login First";
+        }
+    });
+    
+    let logoutButton = document.getElementById('logout');
+    logoutButton.addEventListener('click', logout);
+    
+    async function logout() {
+        try {
+            await firebase.auth().signOut();
+            console.log("User signed out");
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    
+    
+    
+    document.getElementById('submit').addEventListener('click', loginWithEmail);
+    
+    async function loginWithEmail() {
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        
+        try {
+            const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+            let user = userCredential.user;
+            console.log(user);
+        } catch (error) {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            alert("Email login error:", errorCode, errorMessage);
+        }
+    }
+    
+
+    document.getElementById('signup').addEventListener('click', signUpWithEmail);
+    
+    async function signUpWithEmail() {
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        
+        try {
+            const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            console.log("user cred", userCredential);
+            let user = userCredential.user;
+            console.log("User created:", user);
+        } catch (error) {
+            console.error("Signup error:", errorCode, errorMessage);
+        }
+    }
+    
+
+
+    const urlInput = document.getElementById('url');
+    const submitUrl = document.getElementById('store-url');
+    
+    submitUrl.addEventListener('click', async () => {
+        console.log(urlInput.value); 
+
+        let url = urlInput.value;
+
+        const getQuestionSlug = async () => {
+            try {
+                const res = await fetch(`https://lcid.cc/info/${url}`)
+                const data = await res.json();
+                const questionTitle = data.titleSlug;
+                getQuestionDetails(questionTitle);
+                console.log(`first console ${questionTitle}`);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        
+        const getQuestionDetails = async (questionTitle) => {
+            try {
+                const res = await fetch(`https://alfa-leetcode-api.onrender.com/select?titleSlug=${questionTitle}`);
+                const data = await res.json();
+                console.log(data);
+                console.log(data.link, data.questionTitle, data.difficulty);
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getQuestionSlug();
+        
+    });
+
+    
+ 
+ 
