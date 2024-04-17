@@ -3,11 +3,12 @@ import {
   Application,
   Router
 } from "https://deno.land/x/oak@v7.7.0/mod.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
-const env = await load();
-const password = env["PASSWORD"];
+// const env = await load();
+// const password = env["PASSWORD"];
 
-console.log(password);
+// console.log(password);
 
 import { getFirestore, collection, getDocs, setDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
@@ -30,6 +31,12 @@ const db = getFirestore(app);
 
 const router = new Router();
 const DenoApp= new Application();
+
+DenoApp.use(
+  oakCors({
+    origin: ""
+  }),
+);
 
 router
 .get('/', (ctx) => {
@@ -72,6 +79,6 @@ DenoApp.addEventListener('listen', () => {
 
 DenoApp.use();
 
-await DenoApp.listen({port: 8000});
+DenoApp.listen({port: 8000});
 
 

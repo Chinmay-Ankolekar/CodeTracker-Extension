@@ -111,20 +111,66 @@ const firebaseConfig = {
             }
         }
         
+        // const getQuestionDetails = async (questionTitle) => {
+        //     try {
+        //         const res = await fetch(`https://alfa-leetcode-api.onrender.com/select?titleSlug=${questionTitle}`);
+        //         const data = await res.json();
+        //         const QuestionDetails = {
+        //             title: data.questionTitle,
+        //             difficulty: data.difficulty,
+        //             link: data.link
+        //         }
+        //         console.log(QuestionDetails);
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
+        getQuestionSlug(); 
+
+        const postQuestionDetails = async (questionDetails) => {
+            try {
+                const res = await fetch('http://localhost:8000/test', {
+                    method: 'POST',
+                    headers: {
+                        "Access-Control-Request-Headers": "*",
+                        "Access-Control-Request-Method": "*",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(questionDetails)
+                });
+        
+                if (!res.ok) {
+                    throw new Error('Failed to post question details to the backend');
+                }
+        
+                const data = await res.json();
+                console.log('Response from backend:', data);
+            } catch (error) {
+                console.error('Error posting question details to the backend:', error);
+            }
+        };
+        
         const getQuestionDetails = async (questionTitle) => {
             try {
                 const res = await fetch(`https://alfa-leetcode-api.onrender.com/select?titleSlug=${questionTitle}`);
                 const data = await res.json();
-                console.log(data);
-                console.log(data.link, data.questionTitle, data.difficulty);
-
+                const questionDetails = {
+                    title: data.questionTitle,
+                    difficulty: data.difficulty,
+                    link: data.link
+                };
+                console.log('Question Details:', questionDetails);
+        
+                // Post question details to the backend
+                await postQuestionDetails(questionDetails);
             } catch (error) {
-                console.log(error);
+                console.error('Error fetching or processing question details:', error);
             }
-        }
-        getQuestionSlug();
+        };
         
     });
+
+
 
     
  
