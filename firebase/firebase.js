@@ -55,8 +55,6 @@ const firebaseConfig = {
         }
     }
     
-    
-    
     document.getElementById('submit').addEventListener('click', loginWithEmail);
     
     async function loginWithEmail() {

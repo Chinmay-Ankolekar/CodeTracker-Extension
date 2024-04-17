@@ -2,28 +2,11 @@
     "name" : "Leetcode Tracker",
     "version": "1.0.0",
     "manifest_version": 3,
-    "permissions": [
-        "activeTab",
-        "tabs",
-        "https://*.firebaseio.com/"  
-    ],
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": ["popup.js"],
-            "run_at": "document_end"
-        }
-    ],
     "action": {
         "default_title": "Leetcode Tracker",
         "default_popup": "popup.html"
     },
     "background": {
         "service-worker": "firebase.js"
-    },
-    "content_security_policy": {
-        "script-src": ["'self'", "https://*.firebaseio.com", "https://www.gstatic.com"]
-    }
-    
-    
+    } 
 }
