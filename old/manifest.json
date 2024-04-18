@@ -1,0 +1,25 @@
+{
+    "name" : "Leetcode Tracker",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "action": {
+        "default_title": "Leetcode Tracker",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service-worker": "firebase.js"
+    },
+    "host_permissions": [
+        "https://leetcode.com/"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*/*"
+            ],
+            "js": [
+                "content-script.js"
+            ]
+        }
+    ]
+}

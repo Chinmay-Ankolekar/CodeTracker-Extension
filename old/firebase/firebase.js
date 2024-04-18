@@ -1,0 +1,171 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyAzOFyUtRyHyHIn-4RuwmEsPwQCWBQCCeo",
+    authDomain: "leetcode-tracker-6f022.firebaseapp.com",
+    databaseURL:
+      "https://leetcode-tracker-6f022-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "leetcode-tracker-6f022",
+    storageBucket: "leetcode-tracker-6f022.appspot.com",
+    messagingSenderId: "1018319647499",
+    appId: "1:1018319647499:web:7fecdef6a5cee20192680e",
+    measurementId: "G-EW08MHQ81B",
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+
+  document.getElementById("submit").addEventListener("click", loginWithEmail);
+  
+  async function loginWithEmail() {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+  
+    try {
+      const userCredential = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password);
+      let user = userCredential.user;
+      console.log(user);
+    } catch (error) {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      alert("Email login error:", errorCode, errorMessage);
+    }
+  }
+  
+  document.getElementById("signup").addEventListener("click", signUpWithEmail);
+  
+  async function signUpWithEmail() {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+  
+    try {
+      const userCredential = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
+      console.log("user cred", userCredential);
+      let user = userCredential.user;
+      console.log("User created:", user);
+    } catch (error) {
+      console.error("Signup error:", errorCode, errorMessage);
+    }
+  }
+  
+  
+  firebase.auth().onAuthStateChanged((user) => {
+    let loginForm = document.getElementById("login-form");
+    let urlDiv = document.getElementById("url-div");
+  
+    if (user) {
+      loginForm.style.display = "none";
+      urlDiv.style.display = "block";
+      discriber.innerHTML = `Hi ${user.email}`;
+    } else {
+      loginForm.style.display = "block";
+      urlDiv.style.display = "none";
+      discriber.innerHTML = "Please Login First";
+    }
+  });
+  
+  let logoutButton = document.getElementById("logout");
+  logoutButton.addEventListener("click", logout);
+  
+  async function logout() {
+    try {
+      await firebase.auth().signOut();
+      console.log("User signed out");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function getCurrentTabUrl(callback) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { type: 'getTabUrl' }, function (response) {
+            console.log(response)
+            if (response !== undefined && response.url !== undefined)
+                callback(response.url);
+        });
+    });
+}
+
+getCurrentTabUrl(function (url) {
+  console.log('Current tab URL:', url);
+  if (url && url.includes('leetcode.com/problems/')) {
+      var urlSegments = url.split('/');
+     console.log(urlSegments);
+     let problemName = urlSegments[4];
+     console.log(problemName);
+
+     const getQuestionDetails = async (problemName) => {
+      try {
+        let headersList = {
+          "Accept": "*/*",
+          "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+          "Content-Type": "application/json"
+         }
+         
+         let gqlBody = {
+           query: `query questionHints($titleSlug: String!) {
+           question(titleSlug: $titleSlug) {
+             questionFrontendId
+             title
+             difficulty
+             topicTags {
+               name
+             }
+           }
+         }`,
+           variables: {"titleSlug":`${problemName}`}
+         }
+         
+         let bodyContent =  JSON.stringify(gqlBody);
+         
+         let response = await fetch("https://leetcode.com/graphql", { 
+           method: "POST",
+           body: bodyContent,
+           headers: headersList
+         });  
+  
+         const data = await response.json();
+         const questionDetails = {
+          title: data.data.question.title,
+          difficulty: data.data.question.difficulty,
+          // topicTags: data.data.question.topicTags,
+          link: url,
+        };
+        document.getElementById("name").innerText = questionDetails.title;
+        document.getElementById("difficulty").innerText = questionDetails.difficulty;
+        document.getElementById("link").innerText = questionDetails.link;
+        console.log("Question Details:", questionDetails);
+        const submitBtn = document.getElementById("submit-btn");
+        submitBtn.addEventListener("click", () => {
+          postQuestionDetails(questionDetails);
+          const status = document.getElementById("status");
+          status.innerText = "Question details posted successfully!";
+        });
+      } catch (error) {
+        console.error("Error fetching or processing question details:", error);
+      }
+    };
+    getQuestionDetails(problemName);
+
+    const postQuestionDetails = async (questionDetails) => {
+      try {
+        console.log("Posting question details to the backend:", questionDetails);
+        const res = await fetch("http://localhost:8000/test", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(questionDetails),
+        });
+        const data = await res.json();
+        console.log("Response from backend:", data);
+   
+      } catch (error) {
+        console.error("Error posting question details to the backend:", error);
+      }
+    };
+    
+  }
+});
+
