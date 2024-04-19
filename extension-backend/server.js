@@ -52,22 +52,27 @@ router
   })
   .post("/test", async (ctx) => {
     try {
-      const { title, difficulty, link } = await ctx.request.body("json").value;
+      const { title, difficulty, link, email, uid, topics, time } = await ctx.request.body("json").value;
       const QuestionDetails = {
         title,
         difficulty,
         link,
+        email,
+        uid,
+        topics,
+        time
       };
       if (QuestionDetails) {
         await addDoc(collection(db, "test"), QuestionDetails);
         ctx.response.body = "Question added";
       } else {
-        ctx.response.body = "question not added";
+        ctx.response.body = "Question not added";
       }
     } catch (error) {
       console.log(error);
     }
   });
+  
 
 DenoApp.use(router.routes());
 DenoApp.use(router.allowedMethods());

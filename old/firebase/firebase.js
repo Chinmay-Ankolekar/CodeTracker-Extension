@@ -23,6 +23,7 @@ const firebaseConfig = {
         .auth()
         .signInWithEmailAndPassword(email, password);
       let user = userCredential.user;
+      console.log(firebase.auth().currentUser);
       console.log(user);
     } catch (error) {
       let errorCode = error.code;
@@ -123,19 +124,36 @@ getCurrentTabUrl(function (url) {
            method: "POST",
            body: bodyContent,
            headers: headersList
-         });  
+         }); 
   
          const data = await response.json();
          const questionDetails = {
           title: data.data.question.title,
           difficulty: data.data.question.difficulty,
-          // topicTags: data.data.question.topicTags,
+          topics: data.data.question.topicTags.map(topic => topic.name),
           link: url,
+          time: new Date().toISOString()
         };
+
+        firebase.auth().onAuthStateChanged(user => {
+          if (user) {
+              questionDetails.email = user.email;
+              questionDetails.uid = user.uid;
+              console.log("User Email:", user.email);
+              console.log("User UID:", user.uid);
+          } else {
+              console.log("No user signed in.");
+          }
+      });
+
         document.getElementById("name").innerText = questionDetails.title;
         document.getElementById("difficulty").innerText = questionDetails.difficulty;
         document.getElementById("link").innerText = questionDetails.link;
+        document.getElementById("topics").innerText = questionDetails.topics.join(", ");
         console.log("Question Details:", questionDetails);
+        const currtUser = firebase.auth();
+        console.log(currtUser);
+        
         const submitBtn = document.getElementById("submit-btn");
         submitBtn.addEventListener("click", () => {
           postQuestionDetails(questionDetails);
