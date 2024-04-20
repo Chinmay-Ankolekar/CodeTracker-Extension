@@ -1,9 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
     text-align: center;
-    background-color: #f8f9fa;
+    background-color: #212121;
 }
 
 p {
@@ -16,23 +21,22 @@ p {
 }
 
 input {
-    padding: 5px;
+    padding: 10px;
     margin: 10px;
     width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 button {
-    padding: 5px 10px;
+    padding: 10px 20px;
     margin: 10px;
     background-color: #007bff;
     color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-}
-
-button:hover {
-    background-color: #0056b3;
 }
 
 #questionTitle {
@@ -74,22 +78,21 @@ button:hover {
     text-align: center;
 }
 
-#url-div {
+/* #url-div {
     display: none;
-    max-width: 300px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 5px;
-}
+} */
 
-#url-div p {
+/* #url-div p {
     margin: 10px 0;
 }
 
 #url-div button {
-    width: 100%;
+    width: 90%;
     padding: 10px;
+    margin-right: 100px;
     margin-top: 10px;
     font-size: 16px;
     background-color: #007bff;
@@ -101,4 +104,12 @@ button:hover {
 
 #url-div button:hover {
     background-color: #0056b3;
+} */
+
+
+@keyframes shine {
+    0% { color: rgb(57, 63, 97); }
+    50% { color: #9fa5d3; }
+    100% { color: rgb(57, 63, 97); }
 }
+

@@ -40,9 +40,9 @@ router
   .get("/", (ctx) => {
     ctx.response.body = "Hello from our API! 🦕";
   })
-  .get("/test", async (ctx) => {
+  .get("/question", async (ctx) => {
     try {
-      const test = await getDocs(collection(db, "test"));
+      const test = await getDocs(collection(db, "questions"));
       const data = test.docs.map((doc) => doc.data());
       ctx.response.body = data;
     } catch (e) {
@@ -50,7 +50,7 @@ router
       ctx.response.body = "Something went wrong :(";
     }
   })
-  .post("/test", async (ctx) => {
+  .post("/question", async (ctx) => {
     try {
       const { title, difficulty, link, email, uid, topics, time } = await ctx.request.body("json").value;
       const QuestionDetails = {
@@ -63,7 +63,7 @@ router
         time
       };
       if (QuestionDetails) {
-        await addDoc(collection(db, "test"), QuestionDetails);
+        await addDoc(collection(db, "questions"), QuestionDetails);
         ctx.response.body = "Question added";
       } else {
         ctx.response.body = "Question not added";

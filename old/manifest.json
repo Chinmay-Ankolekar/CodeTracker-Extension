@@ -4,10 +4,12 @@
     "manifest_version": 3,
     "action": {
         "default_title": "Leetcode Tracker",
-        "default_popup": "popup.html"
-    },
-    "background": {
-        "service-worker": "firebase.js"
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "assets/leetcode-logo.png",
+            "48": "assets/leetcode-logo.png",
+            "128": "assets/leetcode-logo.png"
+        }
     },
     "host_permissions": [
         "https://leetcode.com/"

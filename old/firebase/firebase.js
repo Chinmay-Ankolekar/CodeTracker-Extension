@@ -12,7 +12,7 @@ const firebaseConfig = {
   
   firebase.initializeApp(firebaseConfig);
 
-  document.getElementById("submit").addEventListener("click", loginWithEmail);
+  document.getElementById("login").addEventListener("click", loginWithEmail);
   
   async function loginWithEmail() {
     let email = document.getElementById("email").value;
@@ -46,7 +46,9 @@ const firebaseConfig = {
       let user = userCredential.user;
       console.log("User created:", user);
     } catch (error) {
-      console.error("Signup error:", errorCode, errorMessage);
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      alert("Signup error:", errorCode, errorMessage);
     }
   }
   
@@ -54,15 +56,17 @@ const firebaseConfig = {
   firebase.auth().onAuthStateChanged((user) => {
     let loginForm = document.getElementById("login-form");
     let urlDiv = document.getElementById("url-div");
+    let userEmail = document.getElementById("user");
   
     if (user) {
       loginForm.style.display = "none";
       urlDiv.style.display = "block";
-      discriber.innerHTML = `Hi ${user.email}`;
+      userEmail.innerHTML = "User Email: "+ user.email;
+      // discriber.innerHTML = `Hi ${user.email}`;
     } else {
       loginForm.style.display = "block";
       urlDiv.style.display = "none";
-      discriber.innerHTML = "Please Login First";
+      // discriber.innerHTML = "";
     }
   });
   
@@ -146,10 +150,10 @@ getCurrentTabUrl(function (url) {
           }
       });
 
-        document.getElementById("name").innerText = questionDetails.title;
-        document.getElementById("difficulty").innerText = questionDetails.difficulty;
-        document.getElementById("link").innerText = questionDetails.link;
-        document.getElementById("topics").innerText = questionDetails.topics.join(", ");
+      document.getElementById("name").value = "Name: " + questionDetails.title;
+      document.getElementById("difficulty").value = "Difficulty: " + questionDetails.difficulty;
+      document.getElementById("link").value ="Link: " +questionDetails.link;
+      document.getElementById("topics").value ="Topics: " +questionDetails.topics.join(", ");
         console.log("Question Details:", questionDetails);
         const currtUser = firebase.auth();
         console.log(currtUser);
@@ -169,7 +173,7 @@ getCurrentTabUrl(function (url) {
     const postQuestionDetails = async (questionDetails) => {
       try {
         console.log("Posting question details to the backend:", questionDetails);
-        const res = await fetch("http://localhost:8000/test", {
+        const res = await fetch("http://localhost:8000/question", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -177,6 +181,7 @@ getCurrentTabUrl(function (url) {
           body: JSON.stringify(questionDetails),
         });
         const data = await res.json();
+        alert("Question details Saved successfully!");
         console.log("Response from backend:", data);
    
       } catch (error) {

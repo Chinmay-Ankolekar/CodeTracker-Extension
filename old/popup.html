@@ -1,36 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leetcode Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+
 </head>
+
 <body>
     <div class="main">
-        <div id="login-form">
-            <input type="text" id="email" class="input">
-            <input type="password" id="password" class="input">
-            <button id="submit">Login with Email</button>
-            <button id="signup">Sign up with Email</button> 
+        <div id="login-form" style="
+          padding: 10px;
+          background-color: rgb(45, 45, 45);
+          border-radius: 10px;
+        ">
+            <h1 style="display: flex; align-items: center; margin-left: 45px">
+                <img src="./assets/leetcode-logo.png" style="width: 10%" />
+                <span style="margin-left: 10px; color: rgb(131, 141, 200)">Leetcode Tracker
+                </span>
+            </h1>
+            <p style="margin-left: 20px; color: rgb(136, 157, 203)">
+                Login to track your leetcode questions
+            </p>
+            <input type="text" id="email" class="input" placeholder="Enter Email" style="
+            background-color: #36383b;
+            color: #cbd5e0;
+            border: 1px solid #4a5568;
+          " />
+            <input type="password" id="password" class="input" placeholder="Enter Password" style="
+            background-color: #36383b;
+            color: #cbd5e0;
+            border: 1px solid #4a5568;
+          " />
+
+            <button id="login" style="
+            background-color: #4a5568;
+            color: #cbd5e0;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+          ">
+                Login
+            </button>
+            <button id="signup" style="
+            background-color: #4a5568;
+            color: #cbd5e0;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+          ">
+                Sign-up
+            </button>
+            <p style="margin-left: 10px; color: rgb(133, 143, 197)">
+                Don't have an account? Signup using email & password
+            </p>
         </div>
-        <div id="url-div" style="display: none;">
-            <p id="name"></p>
-            <p id="difficulty"></p>
-            <p id="link"></p>
-            <p id="topics"></p>
-            <button id="submit-btn">Save Question</button>
-            <button id="logout">Logout</button>
-            <p id="status"></p>
+
+        <div id="url-div" style="display: none; padding: 10px; background-color: rgb(45, 45, 45); border-radius: 10px; width: 95%;">
+            <h1 style="display: flex; align-items: center; margin-left: 60px;">
+                <img src="./assets/leetcode-logo.png" style="width: 10%" />
+                <span style="margin-left:10px ; color: rgb(131, 141, 200)">Leetcode Tracker</span>
+            </h1>
+            <div style="margin-top: 1px; background-color: #333a47; border-color: #319795; color: #7a7b8f; font-size: 0.8rem; border-radius: 0.375rem; padding: 1rem; background-blend-mode: luminosity;" role="alert">
+                <span style="font-weight: bold; color: #cbd5e0;">Leetcode Tracker</span> is a platform where details of DSA questions are stored, allowing you to revise the questions at your convenience.
+            </div>
+
+            <div style="margin-top: 10px; background-color: #333a47; border-color: #319795; color: #7a7b8f; font-size: 0.875rem; border-radius: 0.375rem; padding-left: 1rem; padding-top: 0.2rem; padding-bottom: 1rem; padding-right: 1rem; background-blend-mode: luminosity;" role="alert">
+                <h3 style="color: #cbd5e0; text-decoration: underline; font-size: 0.8rem;">Question Details</h3>
+                <input id="name" type="text" style="color: #2a3139; font-size: 0.8rem;  background-color: #36383b;
+                color: #9aa9bb; border: 1px solid rgb(76, 77, 83)" readonly>
+                <input id="difficulty" type="text" style="color: #cbd5e0; font-size: 0.8rem;  background-color: #36383b;
+                color: #9aa9bb;  border: 1px solid rgb(76, 77, 83)" readonly>
+                <input id="link" type="text" style="color: #cbd5e0; font-size: 0.8rem;  background-color: #36383b;
+                color: #9aa9bb;  border: 1px solid rgb(76, 77, 83)" readonly>
+                <input id="topics" type="text" style="color: #cbd5e0; font-size: 0.8rem;  background-color: #36383b;
+                color: #9aa9bb; border: 1px solid rgb(76, 77, 83);" readonly>
+                <span id="user" style="font-size: 10px;"></span>
+            </div>
+            <button id="submit-btn" style="background-color: #4a5568; color: #cbd5e0; border: none; padding: 10px 20px; margin-top: 10px; cursor: pointer;">Save Question</button>
+            <button id="logout" style="background-color: #4a5568; color: #cbd5e0; border: none; padding: 10px 20px; margin-top: 10px; cursor: pointer;">Logout</button>
+            
+            <p id="status" style="color:rgb(136, 157, 203); font-size: 0.6rem;"></p>
+            
         </div>
-    </div>
-    <div class="main2">
-        <h1 id="discriber">Please Login First</h1>
-    </div>
-    
-    <script src="./firebase/firebase-app.js"></script>
-    <script src="./firebase/firebase-auth.js"></script>
-    <script src="./firebase/firebase.js"></script>
+        
+        <!-- <div class="main2">
+      <h1 id="discriber"></h1>
+    </div> -->
+
+        <script src="./firebase/firebase-app.js"></script>
+        <script src="./firebase/firebase-auth.js"></script>
+        <script src="./firebase/firebase.js"></script>
 </body>
+
 </html>
