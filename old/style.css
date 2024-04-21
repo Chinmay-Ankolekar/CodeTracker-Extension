@@ -1,14 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Mina&family=Nanum+Gothic+Coding&family=Nova+Square&family=Poppins:wght@300&family=Quicksand&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Work+Sans&display=swap');
 
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
     text-align: center;
     background-color: #212121;
+    font-family:  monospace, Source Code Pro;
+    -webkit-font-smoothing: antialiased;
 }
 
 p {
@@ -26,6 +25,7 @@ input {
     width: 300px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-family:  monospace, Source Code Pro;
 }
 
 button {
@@ -37,6 +37,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    font-family:  monospace, Source Code Pro;
 }
 
 #questionTitle {

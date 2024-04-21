@@ -17,9 +17,9 @@
           background-color: rgb(45, 45, 45);
           border-radius: 10px;
         ">
-            <h1 style="display: flex; align-items: center; margin-left: 45px">
+            <h1 style="display: flex; align-items: center; margin-left: 40px">
                 <img src="./assets/leetcode-logo.png" style="width: 10%" />
-                <span style="margin-left: 10px; color: rgb(131, 141, 200)">Leetcode Tracker
+                <span style="margin-left: 10px; color: rgb(217, 222, 232)">Leetcode Tracker
                 </span>
             </h1>
             <p style="margin-left: 20px; color: rgb(136, 157, 203)">
@@ -54,31 +54,34 @@
           ">
                 Sign-up
             </button>
-            <p style="margin-left: 10px; color: rgb(133, 143, 197)">
-                Don't have an account? Signup
+            <p style="margin-left: 10px; color: rgb(136, 157, 203)">
+                Don't have an account? Create one by clicking Sign-up.
             </p>
         </div>
 
         <div id="url-div" style="display: none; padding: 10px; background-color: rgb(45, 45, 45); border-radius: 10px; width: 95%;">
-            <h1 style="display: flex; align-items: center; margin-left: 60px;">
+            <h1 style="display: flex; align-items: center; margin-left: 55px;">
                 <img src="./assets/leetcode-logo.png" style="width: 10%" />
-                <span style="margin-left:10px ; color: rgb(131, 141, 200)">Leetcode Tracker</span>
+                <span style="margin-left:10px ; color: rgb(217, 222, 232)">Leetcode Tracker</span>
             </h1>
             <div style="margin-top: 1px; background-color: #333a47; border-color: #319795; color: #7a7b8f; font-size: 0.8rem; border-radius: 0.375rem; padding: 1rem; background-blend-mode: luminosity;" role="alert">
                 <span style="font-weight: bold; color: #cbd5e0;">Leetcode Tracker</span> is a platform where details of DSA questions are stored, allowing you to revise the questions at your convenience.
+            
+                <span style="margin-top: 5px; display: block; background-color: #4f5860; color:  #eceded;border-radius: 10px;padding: 3px;"> Reminder: Open a LeetCode problem page to access question details. </span>
             </div>
+            
 
-            <div style="margin-top: 10px; background-color: #333a47; border-color: #319795; color: #7a7b8f; font-size: 0.875rem; border-radius: 0.375rem; padding-left: 1rem; padding-top: 0.2rem; padding-bottom: 1rem; padding-right: 1rem; background-blend-mode: luminosity;" role="alert">
+            <div id="question" style="margin-top: 10px; background-color: #333a47; border-color: #319795; color: #7a7b8f; font-size: 0.875rem; border-radius: 0.375rem; padding-left: 1rem; padding-top: 0.2rem; padding-bottom: 1rem; padding-right: 1rem; background-blend-mode: luminosity;" role="alert">
                 <h3 style="color: #cbd5e0; text-decoration: underline; font-size: 0.8rem;">Question Details</h3>
                 <input id="name" type="text" style="color: #2a3139; font-size: 0.8rem;  background-color: #36383b;
                 color: #9aa9bb; border: 1px solid rgb(76, 77, 83)" readonly>
                 <input id="difficulty" type="text" style="color: #cbd5e0; font-size: 0.8rem;  background-color: #36383b;
                 color: #9aa9bb;  border: 1px solid rgb(76, 77, 83)" readonly>
-                <input id="link" type="text" style="color: #cbd5e0; font-size: 0.8rem;  background-color: #36383b;
-                color: #9aa9bb;  border: 1px solid rgb(76, 77, 83)" readonly>
+                <!-- <input id="link" type="text" style="color: #cbd5e0; font-size: 0.8rem;  background-color: #36383b;
+                color: #9aa9bb;  border: 1px solid rgb(76, 77, 83)" readonly> -->
                 <input id="topics" type="text" style="color: #cbd5e0; font-size: 0.8rem;  background-color: #36383b;
                 color: #9aa9bb; border: 1px solid rgb(76, 77, 83);" readonly>
-                <span id="user" style="font-size: 10px;"></span>
+                <span id="user" style="font-size: 10px; background-color: #4f5860; color: #eceded; padding: 4px; border-radius: 10px;"></span>
             </div>
             <button id="submit-btn" style="background-color: #4a5568; color: #cbd5e0; border: none; padding: 10px 20px; margin-top: 10px; cursor: pointer;">Save Question</button>
             <button id="logout" style="background-color: #4a5568; color: #cbd5e0; border: none; padding: 10px 20px; margin-top: 10px; cursor: pointer;">Logout</button>

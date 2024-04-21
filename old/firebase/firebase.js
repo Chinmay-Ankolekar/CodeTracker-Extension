@@ -86,7 +86,7 @@ const firebaseConfig = {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { type: 'getTabUrl' }, function (response) {
             console.log(response)
-            if (response !== undefined && response.url !== undefined)
+            if (response !== undefined && response.url !== undefined) 
                 callback(response.url);
         });
     });
@@ -152,7 +152,7 @@ getCurrentTabUrl(function (url) {
 
       document.getElementById("name").value = "Name: " + questionDetails.title;
       document.getElementById("difficulty").value = "Difficulty: " + questionDetails.difficulty;
-      document.getElementById("link").value ="Link: " +questionDetails.link;
+      // document.getElementById("link").value ="Link: " +questionDetails.link;
       document.getElementById("topics").value ="Topics: " +questionDetails.topics.join(", ");
         console.log("Question Details:", questionDetails);
         const currtUser = firebase.auth();
