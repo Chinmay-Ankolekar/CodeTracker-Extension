@@ -82,113 +82,202 @@ const firebaseConfig = {
     }
   }
 
-  function getCurrentTabUrl(callback) {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, { type: 'getTabUrl' }, function (response) {
-            console.log(response)
-            if (response !== undefined && response.url !== undefined) 
-                callback(response.url);
-        });
-    });
+//   function getCurrentTabUrl(callback) {
+//     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+//         chrome.tabs.sendMessage(tabs[0].id, { type: 'getTabUrl' }, function (response) {
+//             console.log(response)
+//             if (response !== undefined && response.url !== undefined) 
+//                 callback(response.url);
+//         });
+//     });
+// }
+
+// getCurrentTabUrl(function (url) {
+//   console.log('Current tab URL:', url);
+//   if (url && url.includes('leetcode.com/problems/')) {
+//       var urlSegments = url.split('/');
+//      console.log(urlSegments);
+//      let problemName = urlSegments[4];
+//      console.log(problemName);
+
+//      const getQuestionDetails = async (problemName) => {
+//       try {
+//         let headersList = {
+//           "Accept": "*/*",
+//           "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+//           "Content-Type": "application/json"
+//          }
+         
+//          let gqlBody = {
+//            query: `query questionHints($titleSlug: String!) {
+//            question(titleSlug: $titleSlug) {
+//              questionFrontendId
+//              title
+//              difficulty
+//              topicTags {
+//                name
+//              }
+//            }
+//          }`,
+//            variables: {"titleSlug":`${problemName}`}
+//          }
+         
+//          let bodyContent =  JSON.stringify(gqlBody);
+         
+//          let response = await fetch("https://leetcode.com/graphql", { 
+//            method: "POST",
+//            body: bodyContent,
+//            headers: headersList
+//          }); 
+  
+//          const data = await response.json();
+//          const questionDetails = {
+//           title: data.data.question.title,
+//           difficulty: data.data.question.difficulty,
+//           topics: data.data.question.topicTags.map(topic => topic.name),
+//           link: url,
+//           time: new Date().toISOString()
+//         };
+
+//         firebase.auth().onAuthStateChanged(user => {
+//           if (user) {
+//               questionDetails.email = user.email;
+//               questionDetails.uid = user.uid;
+//               console.log("User Email:", user.email);
+//               console.log("User UID:", user.uid);
+//           } else {
+//               console.log("No user signed in.");
+//           }
+//       });
+
+//       document.getElementById("name").value = "Name: " + questionDetails.title;
+//       document.getElementById("difficulty").value = "Difficulty: " + questionDetails.difficulty;
+//       // document.getElementById("link").value ="Link: " +questionDetails.link;
+//       document.getElementById("topics").value ="Topics: " +questionDetails.topics.join(", ");
+//         console.log("Question Details:", questionDetails);
+//         const currtUser = firebase.auth();
+//         console.log(currtUser);
+        
+//         const submitBtn = document.getElementById("submit-btn");
+//         submitBtn.addEventListener("click", () => {
+//           postQuestionDetails(questionDetails);
+//           const status = document.getElementById("status");
+//           status.innerText = "Question details posted successfully!";
+//         });
+//       } catch (error) {
+//         console.error("Error fetching or processing question details:", error);
+//       }
+//     };
+//     getQuestionDetails(problemName);
+
+//     const postQuestionDetails = async (questionDetails) => {
+//       try {
+//         console.log("Posting question details to the backend:", questionDetails);
+//         const res = await fetch("http://localhost:8000/question", {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify(questionDetails),
+//         });
+//         const data = await res.json();
+//         alert("Question details Saved successfully!");
+//         console.log("Response from backend:", data);
+   
+//       } catch (error) {
+//         console.error("Error posting question details to the backend:", error);
+//       }
+//     };
+    
+//   }
+// });
+
+function getCurrentTabUrl() {
+  chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
+      const response = await chrome.tabs.sendMessage(tabs[0].id, { type: 'getTabUrl' });
+      if (response && response.url && response.url.includes('leetcode.com/problems/')) {
+            var urlSegments = response.url.split('/');
+             console.log(urlSegments);
+             let problemName = urlSegments[4];
+             console.log(problemName);
+
+          try {
+              const headersList = {
+                  "Accept": "*/*",
+                  "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+                  "Content-Type": "application/json"
+              };
+              const gqlBody = {
+                  query: `query questionHints($titleSlug: String!) {
+                      question(titleSlug: $titleSlug) {
+                          title
+                          difficulty
+                          topicTags {
+                              name
+                          }
+                      }
+                  }`,
+                  variables: {"titleSlug": problemName}
+              };
+              const bodyContent = JSON.stringify(gqlBody);
+              const response = await fetch("https://leetcode.com/graphql", { 
+                  method: "POST",
+                  body: bodyContent,
+                  headers: headersList
+              }); 
+              const data = await response.json();
+
+              const questionDetails = {
+                  title: data.data.question.title,
+                  difficulty: data.data.question.difficulty,
+                  topics: data.data.question.topicTags.map(topic => topic.name),
+                  link: response.url,
+                  time: new Date().toISOString()
+              };
+
+              firebase.auth().onAuthStateChanged(user => {
+                  if (user) {
+                      questionDetails.email = user.email;
+                      questionDetails.uid = user.uid;
+                      console.log("User Email:", user.email);
+                      console.log("User UID:", user.uid);
+                  } else {
+                      console.log("No user signed in.");
+                  }
+              });
+
+              document.getElementById("name").value = "Name: " + questionDetails.title;
+              document.getElementById("difficulty").value = "Difficulty: " + questionDetails.difficulty;
+              document.getElementById("topics").value = "Topics: " + questionDetails.topics.join(", ");
+              console.log("Question Details:", questionDetails);
+
+              const submitBtn = document.getElementById("submit-btn");
+              submitBtn.addEventListener("click", async () => {
+                const status = document.getElementById("status");
+               status.innerText = "Question details posted successfully!";
+                  try {
+                      console.log("Posting question details to the backend:", questionDetails);
+                      const res = await fetch("http://localhost:8000/question", {
+                          method: "POST",
+                          headers: {
+                              "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify(questionDetails),
+                      });
+                      const data = await res.json();
+                      alert("Question details Saved successfully!");
+                      console.log("Response from backend:", data);
+                  } catch (error) {
+                      console.error("Error posting question details to the backend:", error);
+                  }
+              });
+          } catch (error) {
+              console.error("Error fetching or processing question details:", error);
+          }
+      }
+  });
 }
 
-getCurrentTabUrl(function (url) {
-  console.log('Current tab URL:', url);
-  if (url && url.includes('leetcode.com/problems/')) {
-      var urlSegments = url.split('/');
-     console.log(urlSegments);
-     let problemName = urlSegments[4];
-     console.log(problemName);
+getCurrentTabUrl();
 
-     const getQuestionDetails = async (problemName) => {
-      try {
-        let headersList = {
-          "Accept": "*/*",
-          "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-          "Content-Type": "application/json"
-         }
-         
-         let gqlBody = {
-           query: `query questionHints($titleSlug: String!) {
-           question(titleSlug: $titleSlug) {
-             questionFrontendId
-             title
-             difficulty
-             topicTags {
-               name
-             }
-           }
-         }`,
-           variables: {"titleSlug":`${problemName}`}
-         }
-         
-         let bodyContent =  JSON.stringify(gqlBody);
-         
-         let response = await fetch("https://leetcode.com/graphql", { 
-           method: "POST",
-           body: bodyContent,
-           headers: headersList
-         }); 
-  
-         const data = await response.json();
-         const questionDetails = {
-          title: data.data.question.title,
-          difficulty: data.data.question.difficulty,
-          topics: data.data.question.topicTags.map(topic => topic.name),
-          link: url,
-          time: new Date().toISOString()
-        };
-
-        firebase.auth().onAuthStateChanged(user => {
-          if (user) {
-              questionDetails.email = user.email;
-              questionDetails.uid = user.uid;
-              console.log("User Email:", user.email);
-              console.log("User UID:", user.uid);
-          } else {
-              console.log("No user signed in.");
-          }
-      });
-
-      document.getElementById("name").value = "Name: " + questionDetails.title;
-      document.getElementById("difficulty").value = "Difficulty: " + questionDetails.difficulty;
-      // document.getElementById("link").value ="Link: " +questionDetails.link;
-      document.getElementById("topics").value ="Topics: " +questionDetails.topics.join(", ");
-        console.log("Question Details:", questionDetails);
-        const currtUser = firebase.auth();
-        console.log(currtUser);
-        
-        const submitBtn = document.getElementById("submit-btn");
-        submitBtn.addEventListener("click", () => {
-          postQuestionDetails(questionDetails);
-          const status = document.getElementById("status");
-          status.innerText = "Question details posted successfully!";
-        });
-      } catch (error) {
-        console.error("Error fetching or processing question details:", error);
-      }
-    };
-    getQuestionDetails(problemName);
-
-    const postQuestionDetails = async (questionDetails) => {
-      try {
-        console.log("Posting question details to the backend:", questionDetails);
-        const res = await fetch("http://localhost:8000/question", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(questionDetails),
-        });
-        const data = await res.json();
-        alert("Question details Saved successfully!");
-        console.log("Response from backend:", data);
-   
-      } catch (error) {
-        console.error("Error posting question details to the backend:", error);
-      }
-    };
-    
-  }
-});
 
