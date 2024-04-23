@@ -37,22 +37,22 @@ const firebaseConfig = {
   async function signUpWithEmail() {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
-  
+    let username = document.getElementById("username").value; 
     try {
-      const userCredential = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
-      console.log("user cred", userCredential);
-      let user = userCredential.user;
-      console.log("User created:", user);
+        const userCredential = await firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password);
+        await userCredential.user.updateProfile({
+            displayName: username
+        });
+        console.log("User created:", userCredential.user);
     } catch (error) {
-      let errorCode = error.code;
-      let errorMessage = error.message;
-      alert("Signup error:", errorCode, errorMessage);
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        alert("Signup error:", errorCode, errorMessage);
     }
-  }
-  
-  
+}
+
   firebase.auth().onAuthStateChanged((user) => {
     let loginForm = document.getElementById("login-form");
     let urlDiv = document.getElementById("url-div");
@@ -61,12 +61,10 @@ const firebaseConfig = {
     if (user) {
       loginForm.style.display = "none";
       urlDiv.style.display = "block";
-      userEmail.innerHTML = "User Email: "+ user.email;
-      // discriber.innerHTML = `Hi ${user.email}`;
+      userEmail.innerHTML = "Username: "+ user.displayName;
     } else {
       loginForm.style.display = "block";
       urlDiv.style.display = "none";
-      // discriber.innerHTML = "";
     }
   });
   
@@ -81,116 +79,6 @@ const firebaseConfig = {
       console.error(error);
     }
   }
-
-//   function getCurrentTabUrl(callback) {
-//     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-//         chrome.tabs.sendMessage(tabs[0].id, { type: 'getTabUrl' }, function (response) {
-//             console.log(response)
-//             if (response !== undefined && response.url !== undefined) 
-//                 callback(response.url);
-//         });
-//     });
-// }
-
-// getCurrentTabUrl(function (url) {
-//   console.log('Current tab URL:', url);
-//   if (url && url.includes('leetcode.com/problems/')) {
-//       var urlSegments = url.split('/');
-//      console.log(urlSegments);
-//      let problemName = urlSegments[4];
-//      console.log(problemName);
-
-//      const getQuestionDetails = async (problemName) => {
-//       try {
-//         let headersList = {
-//           "Accept": "*/*",
-//           "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-//           "Content-Type": "application/json"
-//          }
-         
-//          let gqlBody = {
-//            query: `query questionHints($titleSlug: String!) {
-//            question(titleSlug: $titleSlug) {
-//              questionFrontendId
-//              title
-//              difficulty
-//              topicTags {
-//                name
-//              }
-//            }
-//          }`,
-//            variables: {"titleSlug":`${problemName}`}
-//          }
-         
-//          let bodyContent =  JSON.stringify(gqlBody);
-         
-//          let response = await fetch("https://leetcode.com/graphql", { 
-//            method: "POST",
-//            body: bodyContent,
-//            headers: headersList
-//          }); 
-  
-//          const data = await response.json();
-//          const questionDetails = {
-//           title: data.data.question.title,
-//           difficulty: data.data.question.difficulty,
-//           topics: data.data.question.topicTags.map(topic => topic.name),
-//           link: url,
-//           time: new Date().toISOString()
-//         };
-
-//         firebase.auth().onAuthStateChanged(user => {
-//           if (user) {
-//               questionDetails.email = user.email;
-//               questionDetails.uid = user.uid;
-//               console.log("User Email:", user.email);
-//               console.log("User UID:", user.uid);
-//           } else {
-//               console.log("No user signed in.");
-//           }
-//       });
-
-//       document.getElementById("name").value = "Name: " + questionDetails.title;
-//       document.getElementById("difficulty").value = "Difficulty: " + questionDetails.difficulty;
-//       // document.getElementById("link").value ="Link: " +questionDetails.link;
-//       document.getElementById("topics").value ="Topics: " +questionDetails.topics.join(", ");
-//         console.log("Question Details:", questionDetails);
-//         const currtUser = firebase.auth();
-//         console.log(currtUser);
-        
-//         const submitBtn = document.getElementById("submit-btn");
-//         submitBtn.addEventListener("click", () => {
-//           postQuestionDetails(questionDetails);
-//           const status = document.getElementById("status");
-//           status.innerText = "Question details posted successfully!";
-//         });
-//       } catch (error) {
-//         console.error("Error fetching or processing question details:", error);
-//       }
-//     };
-//     getQuestionDetails(problemName);
-
-//     const postQuestionDetails = async (questionDetails) => {
-//       try {
-//         console.log("Posting question details to the backend:", questionDetails);
-//         const res = await fetch("http://localhost:8000/question", {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify(questionDetails),
-//         });
-//         const data = await res.json();
-//         alert("Question details Saved successfully!");
-//         console.log("Response from backend:", data);
-   
-//       } catch (error) {
-//         console.error("Error posting question details to the backend:", error);
-//       }
-//     };
-    
-//   }
-// });
 
 function getCurrentTabUrl() {
   chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
@@ -279,5 +167,32 @@ function getCurrentTabUrl() {
 }
 
 getCurrentTabUrl();
+
+const signupBtn = document.getElementById("signup-btn");
+signupBtn.addEventListener("click", () => {
+    let username = document.getElementById("username");
+     username.style.display = "block";
+     let loginBtn = document.getElementById("login-btn");
+     signupBtn.style.display = "none";
+      loginBtn.style.display = "Block";
+      let login = document.getElementById("login");
+      login.style.display = "none";
+      let signup = document.getElementById("signup");
+      signup.style.display = "block";
+});
+
+const loginBtn = document.getElementById("login-btn");
+loginBtn.addEventListener("click", () => {
+    let username = document.getElementById("username");
+     username.style.display = "none";
+     let signupBtn = document.getElementById("signup-btn");
+     loginBtn.style.display = "none";
+      signupBtn.style.display = "Block";
+      let login = document.getElementById("login");
+      login.style.display = "block";
+      let signup = document.getElementById("signup");
+      signup.style.display = "none";
+});
+
 
 
