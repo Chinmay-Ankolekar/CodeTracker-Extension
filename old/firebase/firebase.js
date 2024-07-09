@@ -84,6 +84,7 @@ function getCurrentTabUrl() {
   chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
       const response = await chrome.tabs.sendMessage(tabs[0].id, { type: 'getTabUrl' });
       if (response && response.url && response.url.includes('leetcode.com/problems/')) {
+        console.log(response.url);
             var urlSegments = response.url.split('/');
              console.log(urlSegments);
              let problemName = urlSegments[4];
@@ -108,12 +109,13 @@ function getCurrentTabUrl() {
                   variables: {"titleSlug": problemName}
               };
               const bodyContent = JSON.stringify(gqlBody);
-              const response = await fetch("https://leetcode.com/graphql", { 
+              const ApiResponse = await fetch("https://leetcode.com/graphql", { 
                   method: "POST",
                   body: bodyContent,
                   headers: headersList
               }); 
-              const data = await response.json();
+              const data = await ApiResponse.json();
+              console.log("Question Details:", data);
 
               const questionDetails = {
                   title: data.data.question.title,
@@ -122,6 +124,7 @@ function getCurrentTabUrl() {
                   link: response.url,
                   time: new Date().toISOString()
               };
+              console.log(response.url);
 
               firebase.auth().onAuthStateChanged(user => {
                   if (user) {
@@ -193,6 +196,8 @@ loginBtn.addEventListener("click", () => {
       let signup = document.getElementById("signup");
       signup.style.display = "none";
 });
+
+
 
 
 
