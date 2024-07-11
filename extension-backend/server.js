@@ -34,7 +34,7 @@ DenoApp.use(oakCors({ origin: "*" }));
 
 router
   .get("/", (ctx) => {
-    ctx.response.body = "Hello from our API! 🦕";
+    ctx.response.body = "Hello from our API!! 🦕";
   })
   .get("/question", async (ctx) => {
     try {
