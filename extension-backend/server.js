@@ -2,11 +2,6 @@ import { load } from "https://deno.land/std@0.223.0/dotenv/mod.ts";
 import { Application, Router } from "https://deno.land/x/oak@v7.7.0/mod.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
-// const env = await load();
-// const password = env["PASSWORD"];
-
-// console.log(password);
-
 import {
   getFirestore,
   collection,
@@ -15,16 +10,17 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 
+const env = await load();
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAzOFyUtRyHyHIn-4RuwmEsPwQCWBQCCeo",
-  authDomain: "leetcode-tracker-6f022.firebaseapp.com",
-  databaseURL:
-    "https://leetcode-tracker-6f022-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "leetcode-tracker-6f022",
-  storageBucket: "leetcode-tracker-6f022.appspot.com",
-  messagingSenderId: "1018319647499",
-  appId: "1:1018319647499:web:7fecdef6a5cee20192680e",
-  measurementId: "G-EW08MHQ81B",
+  apiKey: env["API_KEY"],
+  authDomain: env["AUTH_DOMAIN"],
+  databaseURL: env["DATABASE_URL"],
+  projectId: env["PROJECT_ID"],
+  storageBucket: env["STORAGE_BUCKET"],
+  messagingSenderId: env["MESSAGING_SENDER_ID"],
+  appId: env["APP_ID"],
+  measurementId: env["MEASUREMENT_ID"],
 };
 
 const app = initializeApp(firebaseConfig);

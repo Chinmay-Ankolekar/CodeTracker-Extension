@@ -79,35 +79,6 @@ button {
     text-align: center;
 }
 
-/* #url-div {
-    display: none;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 5px;
-} */
-
-/* #url-div p {
-    margin: 10px 0;
-}
-
-#url-div button {
-    width: 90%;
-    padding: 10px;
-    margin-right: 100px;
-    margin-top: 10px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#url-div button:hover {
-    background-color: #0056b3;
-} */
-
-
 @keyframes shine {
     0% { color: rgb(57, 63, 97); }
     50% { color: #9fa5d3; }
