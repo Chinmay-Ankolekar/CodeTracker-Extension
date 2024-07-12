@@ -7,7 +7,7 @@
     "exclude": [
       "**/node_modules"
     ],
-    "include": [],
+    "include": [".env"],
     "entrypoint": "server.js"
   }
 }
