@@ -138,7 +138,7 @@ function getCurrentTabUrl() {
                status.innerText = "Question details posted successfully!";
                   try {
                       console.log("Posting question details to the backend:", questionDetails);
-                      const res = await fetch("http://localhost:8000/question", {
+                      const res = await fetch("https://chinmayanko-leetcode-tr-62.deno.dev/question", {
                           method: "POST",
                           headers: {
                               "Content-Type": "application/json",
