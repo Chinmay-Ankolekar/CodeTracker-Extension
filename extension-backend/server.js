@@ -25,15 +25,28 @@ const env = await load();
 
 // const app = initializeApp(firebaseConfig);
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAzOFyUtRyHyHIn-4RuwmEsPwQCWBQCCeo",
+//   authDomain: "leetcode-tracker-6f022.firebaseapp.com",
+//   databaseURL: "https://leetcode-tracker-6f022-default-rtdb.asia-southeast1.firebasedatabase.app",
+//   projectId: "leetcode-tracker-6f022",
+//   storageBucket: "leetcode-tracker-6f022.appspot.com",
+//   messagingSenderId: "1018319647499",
+//   appId: "1:1018319647499:web:7fecdef6a5cee20192680e",
+//   measurementId: "G-EW08MHQ81B"
+// };
+
+// const app = initializeApp(firebaseConfig);
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAzOFyUtRyHyHIn-4RuwmEsPwQCWBQCCeo",
-  authDomain: "leetcode-tracker-6f022.firebaseapp.com",
-  databaseURL: "https://leetcode-tracker-6f022-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "leetcode-tracker-6f022",
-  storageBucket: "leetcode-tracker-6f022.appspot.com",
-  messagingSenderId: "1018319647499",
-  appId: "1:1018319647499:web:7fecdef6a5cee20192680e",
-  measurementId: "G-EW08MHQ81B"
+  apiKey: Deno.env.get("API_KEY"),
+  authDomain: Deno.env.get("AUTH_DOMAIN"),
+  databaseURL: Deno.env.get("DATABASE_URL"),
+  projectId: Deno.env.get("PROJECT_ID"),
+  storageBucket: Deno.env.get("STORAGE_BUCKET"),
+  messagingSenderId: Deno.env.get("MESSAGING_SENDER_ID"),
+  appId: Deno.env.get("APP_ID"),
+  measurementId: Deno.env.get("MEASUREMENT_ID")
 };
 
 const app = initializeApp(firebaseConfig);
@@ -93,3 +106,6 @@ DenoApp.addEventListener("listen", () => {
 DenoApp.use();
 
 DenoApp.listen({ port: 8000 });
+
+const apiKey = DenoApp.env.get("API_KEY");
+console.log(apiKey);
