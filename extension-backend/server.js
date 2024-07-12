@@ -13,18 +13,32 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/fireba
 const env = await load();
 
 
+// const firebaseConfig = {
+//   apiKey: env["API_KEY"],
+//   authDomain: env["AUTH_DOMAIN"],
+//   databaseURL: env["DATABASE_URL"],
+//   projectId: env["PROJECT_ID"],
+//   storageBucket: env["STORAGE_BUCKET"],
+//   messagingSenderId: env["MESSAGING_SENDER_ID"],
+//   appId: env["APP_ID"],
+//   measurementId: env["MEASUREMENT_ID"],
+// };
+
+// const app = initializeApp(firebaseConfig);
+
 const firebaseConfig = {
-  apiKey: env["API_KEY"],
-  authDomain: env["AUTH_DOMAIN"],
-  databaseURL: env["DATABASE_URL"],
-  projectId: env["PROJECT_ID"],
-  storageBucket: env["STORAGE_BUCKET"],
-  messagingSenderId: env["MESSAGING_SENDER_ID"],
-  appId: env["APP_ID"],
-  measurementId: env["MEASUREMENT_ID"],
+  apiKey: "AIzaSyAzOFyUtRyHyHIn-4RuwmEsPwQCWBQCCeo",
+  authDomain: "leetcode-tracker-6f022.firebaseapp.com",
+  databaseURL: "https://leetcode-tracker-6f022-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "leetcode-tracker-6f022",
+  storageBucket: "leetcode-tracker-6f022.appspot.com",
+  messagingSenderId: "1018319647499",
+  appId: "1:1018319647499:web:7fecdef6a5cee20192680e",
+  measurementId: "G-EW08MHQ81B"
 };
 
 const app = initializeApp(firebaseConfig);
+
 
 const db = getFirestore(app);
 
