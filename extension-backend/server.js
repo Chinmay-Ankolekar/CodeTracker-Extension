@@ -12,15 +12,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/fireba
 
 const env = await load();
 
+
 const firebaseConfig = {
-  apiKey: Deno.env.get("API_KEY"),
-  authDomain: Deno.env.get("AUTH_DOMAIN"),
-  databaseURL: Deno.env.get("DATABASE_URL"),
-  projectId: Deno.env.get("PROJECT_ID"),
-  storageBucket: Deno.env.get("STORAGE_BUCKET"),
-  messagingSenderId: Deno.env.get("MESSAGING_SENDER_ID"),
-  appId: Deno.env.get("APP_ID"),
-  measurementId: Deno.env.get("MEASUREMENT_ID")
+  apiKey: env["API_KEY"],
+  authDomain: env["AUTH_DOMAIN"],
+  databaseURL: env["DATABASE_URL"],
+  projectId: env["PROJECT_ID"],
+  storageBucket: env["STORAGE_BUCKET"],
+  messagingSenderId: env["MESSAGING_SENDER_ID"],
+  appId: env["APP_ID"],
+  measurementId: env["MEASUREMENT_ID"],
 };
 
 const app = initializeApp(firebaseConfig);
@@ -81,5 +82,4 @@ DenoApp.use();
 
 DenoApp.listen({ port: 8000 });
 
-const apiKey = DenoApp.env.get("API_KEY");
-console.log(apiKey);
+
