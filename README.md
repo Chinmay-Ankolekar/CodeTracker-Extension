@@ -20,6 +20,15 @@ CodeTracker is available on Microsoft Edge. To install:
 
 Or click on this link: [CodeTracker](https://microsoftedge.microsoft.com/addons/detail/cfcmhhhpceojgdlcobapopmehbefnmcp)
 
+## Accessing Saved Questions
+
+To access and manage your saved LeetCode questions, visit the dedicated management page:
+
+[Access Saved Questions](https://leetcode-tracker-extension.netlify.app/)
+
+On this page, you can review, organize, and revise all the questions you've saved using the CodeTracker extension.
+
+
 ## Usage
 
 1. **Saving a Question**: 
