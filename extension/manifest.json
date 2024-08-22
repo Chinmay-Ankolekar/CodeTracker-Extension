@@ -17,7 +17,7 @@
     "content_scripts": [
         {
             "matches": [
-                "https://*/*"
+                "https://leetcode.com/"
             ],
             "js": [
                 "content-script.js"
