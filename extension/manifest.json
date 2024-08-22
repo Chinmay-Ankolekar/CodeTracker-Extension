@@ -1,9 +1,9 @@
 {
-    "name" : "Leetcode Tracker",
+    "name" : "CodeTracker",
     "version": "1.0.0",
     "manifest_version": 3,
     "action": {
-        "default_title": "Leetcode Tracker",
+        "default_title": "CodeTracker",
         "default_popup": "popup.html",
         "default_icon": {
             "16": "assets/leetcode-logo.png",
